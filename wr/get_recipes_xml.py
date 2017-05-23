@@ -18,11 +18,11 @@ NS = {
 E = Builder(**NS)._
 
 CATEGORIES = [
-    'Beverage_Recipes',
-    'Appetizer_Recipes',
-    'Main_Dish_Recipes',
-    'Side_Dish_Recipes',
-    'Dessert_Recipes',
+    ('Beverage_Recipes', 'Beverages')
+    ('Appetizer_Recipes', 'Appetizers')
+    ('Main_Dish_Recipes', 'Main Dishes')
+    ('Side_Dish_Recipes', 'Side Dishes')
+    ('Dessert_Recipes', 'Desserts')
 ]
 
 PATH = os.path.dirname(os.path.abspath(__file__))
@@ -34,15 +34,15 @@ PSTYLEKEY = "{%(aid)s}pstyle" % NS
 
 def main():
     category_counts = {}
-    for category in CATEGORIES:
-        print('\n== %s ==' % category)
+    for category_label, category_title in CATEGORIES:
+        print('\n== %s ==' % category_label)
         xml = XML()
-        xml.fn = os.path.join(CONTENT_PATH, '%s.xml' % category)
+        xml.fn = os.path.join(CONTENT_PATH, '%s.xml' % category_label)
         items_elem = E.items()
         xml.root = E.category(
-            E.title(category.replace('_', ' '), Entity('#xA'), {PSTYLEKEY:'category-title'}), 
+            E.title(category_title, Entity('#xA'), {PSTYLEKEY:'category-title'}), 
             items_elem)
-        list_url = ARTICLES_URL + "/List?category=%s&limit=%d" % (category, NUM_RECIPES)
+        list_url = ARTICLES_URL + "/List?category=%s&limit=%d" % (category_label, NUM_RECIPES)
         recipe_list = requests.get(list_url).json()
         items = recipe_list.get('items')
         print(len(items), 'items')
@@ -55,7 +55,7 @@ def main():
             except:
                 print(traceback.format_exc())
         xml.write(pretty_print=True, canonicalized=False)
-        category_counts[category] = len(xml.root.xpath("//item"))
+        category_counts[category_label] = len(xml.root.xpath("//item"))
     print(json.dumps(category_counts, indent=2))
 
 def get_item_elem(item, only_with_images=True):
