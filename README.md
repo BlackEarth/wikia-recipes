@@ -47,3 +47,5 @@ Python package to create a cookbook from <http://recipes.wikia.com>.
 ```bash
     $ python wr/get_recipes_xml.py
 ```
+
+* And then you can open the recipes template (in interior/Recipes.idml) and start playing with the XML data.
