@@ -14,7 +14,6 @@ MIN_IMAGE_HEIGHT = None
 NS = {
     'aid':"http://ns.adobe.com/AdobeInDesign/4.0/",
     'aid5':"http://ns.adobe.com/AdobeInDesign/5.0/",
-    'pub':"http://publishingxml.org/ns",
 }
 E = Builder(**NS)._
 
@@ -23,7 +22,7 @@ CATEGORIES = [
     'Appetizer_Recipes',
     'Main_Dish_Recipes',
     'Side_Dish_Recipes',
-    # 'Dessert_Recipes',
+    'Dessert_Recipes',
 ]
 
 PATH = os.path.dirname(os.path.abspath(__file__))
